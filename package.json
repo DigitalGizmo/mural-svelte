@@ -5,8 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:review": "vite --mode review",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:kiosk": "vite build --mode kiosk",
+    "build:review": "vite build --mode review",
+    "build:production": "vite build --mode production",
+    "preview": "vite preview",
+    "preview:kiosk": "vite preview --mode kiosk",
+    "preview:review": "vite preview --mode review"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",

@@ -1,9 +1,13 @@
 // Asset path helpers — encodes the deployed naming convention.
-// Assets live in public/ (panels/, pops/, images/) and are served at BASE_URL.
-// Replaces the old Gatsby GATSBY_ASSET_PATH indirection; every path is derived
-// purely from JSON fields (ordinal, slug, articleType, learnmoreType, indices).
-
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, ''); // '' when served at root
+// Every path is derived purely from JSON fields (ordinal, slug, articleType,
+// learnmoreType, indices). Replaces the old Gatsby GATSBY_ASSET_PATH indirection.
+//
+// Media host is set per build mode by VITE_IMAGE_BASE (.env.<mode>):
+//   ''  (empty) → served from the app's own /public at the site root (dev, nginx-at-root)
+//   '.'         → relative, for an offline file:// kiosk build (media bundled in dist)
+//   'https://assets.digitalgizmo.com/<slug>' → separate CDN host (online review/production;
+//                 media NOT bundled — the online build stays tiny)
+const BASE = (import.meta.env.VITE_IMAGE_BASE ?? '').replace(/\/$/, '');
 
 const p = (n) => `p${n}`; // panelNum prefix, n = panel ordinal
 
