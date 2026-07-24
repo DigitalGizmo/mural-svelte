@@ -1,7 +1,7 @@
 <script>
   import { voiceAudio } from '../../lib/assets.js';
   let { pop } = $props();
-  const lm = pop.learnmore;
+  const lm = $derived(pop.learnmore);
 </script>
 
 <div>

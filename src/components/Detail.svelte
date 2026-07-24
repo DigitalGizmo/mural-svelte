@@ -4,8 +4,8 @@
 
   let { panel } = $props();
 
-  const intro = panel.articles[0];
-  const fore = panel.articles[1];
+  const intro = $derived(panel.articles[0]);
+  const fore = $derived(panel.articles[1]);
 
   const openHotspot = (hotspot) =>
     openPop({ type: 'hotspot', panelNum: panel.ordinal, hotspot });
@@ -22,7 +22,7 @@
       <image id="document" x="0" y="0" href={panelBg(panel.slug)} width="800" height="1800" />
 
       {#each panel.hotspots as hotspot (hotspot.slug)}
-        <a class="pop_item" href="/"
+        <a class="pop_item" href="/" aria-label={hotspot.title}
           onclick={(e) => { e.preventDefault(); openHotspot(hotspot); }}>
           <circle class="hotspot" cx={hotspot.x} cy={hotspot.y} r="72" />
         </a>

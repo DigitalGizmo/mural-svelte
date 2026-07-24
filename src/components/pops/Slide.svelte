@@ -6,8 +6,8 @@
 
   let { pop } = $props();
 
-  const lm = pop.learnmore;
-  const slides = lm.slides;
+  const lm = $derived(pop.learnmore);
+  const slides = $derived(lm.slides);
 
   let slideIndex = $state(0);
   let dir = $state(1); // 1 = next, 0 = prev; read live by the slide transition

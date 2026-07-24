@@ -4,9 +4,9 @@
 
   let { panel, contentIndex } = $props();
 
-  const panelNum = panel.ordinal;
-  const introTitle = panel.articles[0].title;
-  const foreTitle = panel.articles[1].title;
+  const panelNum = $derived(panel.ordinal);
+  const introTitle = $derived(panel.articles[0].title);
+  const foreTitle = $derived(panel.articles[1].title);
   const article = $derived(panel.articles[contentIndex]);
 
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);

@@ -1,7 +1,7 @@
 <script>
   import { hotspotImg } from '../../lib/assets.js';
   let { pop } = $props();
-  const h = pop.hotspot;
+  const h = $derived(pop.hotspot);
 </script>
 
 <div>
