@@ -7,16 +7,25 @@
   import Detail from './Detail.svelte';
   import Article from './Article.svelte';
   import { panels, slugOrder } from '../lib/data.js';
-  import { panelPath, route } from '../lib/router.svelte.js';
+  import { panelPath, route, go } from '../lib/router.svelte.js';
   import { ui } from '../lib/store.svelte.js';
   import { panelPrev, panelNext, arrowPrev, arrowNext } from '../lib/assets.js';
   import { panelSlide } from '../lib/transitions.js';
+  import { swipe } from '../lib/swipe.js';
 
   let { panel } = $props();
 
   const idx = $derived(slugOrder.indexOf(panel.slug));
   const prevPanel = $derived(idx > 0 ? panels[idx - 1] : null);
   const nextPanel = $derived(idx < panels.length - 1 ? panels[idx + 1] : null);
+
+  // Swipe left → next panel, right → prev (mirrors the arrows; sets slide direction).
+  const swipeNext = () => {
+    if (nextPanel) { ui.linkDirection = 1; go(panelPath(nextPanel.slug)); }
+  };
+  const swipePrev = () => {
+    if (prevPanel) { ui.linkDirection = 0; go(panelPath(prevPanel.slug)); }
+  };
 
   // This instance is "active" only while it's the routed panel. While active, the
   // displayed content index tracks the global (so tab clicks work); once we navigate
@@ -31,6 +40,7 @@
 
 <div
   class="content-area"
+  use:swipe={{ onLeft: swipeNext, onRight: swipePrev }}
   in:panelSlide|local={{ dir: ui.linkDirection, mode: 'in' }}
   out:panelSlide|local={{ dir: ui.linkDirection, mode: 'out' }}
 >

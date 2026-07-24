@@ -4,6 +4,7 @@
   // already advanced). `getDir` is read live at transition time so the OUT slide
   // exits toward the correct side even when direction just reversed.
   import { slideShow } from '../../lib/transitions.js';
+  import { swipe } from '../../lib/swipe.js';
   import { arrowPrev, arrowNext, arrowGrayPrev, arrowGrayNext } from '../../lib/assets.js';
 
   let { src, alt, title, caption, narrative, hasPrev, hasNext, prevSlide, nextSlide, getDir } =
@@ -12,6 +13,7 @@
 
 <div
   class="slide-container"
+  use:swipe={{ onLeft: nextSlide, onRight: prevSlide }}
   in:slideShow|local={{ dir: getDir(), mode: 'in' }}
   out:slideShow|local={{ dir: getDir(), mode: 'out' }}
 >
