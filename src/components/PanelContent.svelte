@@ -46,7 +46,9 @@
   {#if ci === 2}
     <Detail {panel} />
   {:else}
-    <Article {panel} contentIndex={ci} />
+    {#key ci}
+      <Article {panel} contentIndex={ci} />
+    {/key}
   {/if}
 
   <div class="next-panel">

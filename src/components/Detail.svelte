@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import { setContent, openPop } from '../lib/store.svelte.js';
   import { panelBg } from '../lib/assets.js';
 
@@ -11,7 +12,7 @@
     openPop({ type: 'hotspot', panelNum: panel.ordinal, hotspot });
 </script>
 
-<div class="current-panel">
+<div class="current-panel" transition:fade|local={{ duration: 300 }}>
   <article>
     <h3>About This Panel</h3>
     <div>{@html panel.blurb}</div>

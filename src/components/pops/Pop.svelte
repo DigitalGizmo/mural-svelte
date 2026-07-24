@@ -1,4 +1,5 @@
 <script>
+  import { fade, scale } from 'svelte/transition';
   import { closePop } from '../../lib/store.svelte.js';
   import Slide from './Slide.svelte';
   import Voice from './Voice.svelte';
@@ -46,8 +47,9 @@
   aria-label="Close"
   onclick={onOverlayClick}
   onkeydown={onOverlayKeydown}
+  transition:fade={{ duration: 200 }}
 >
-  <div id="slimpop-container">
+  <div id="slimpop-container" transition:scale={{ start: 0.5, opacity: 0.2, duration: 300 }}>
     <div class="slimpop-wrapper">
       <p class="pop-close">
         <a id="close-link" href="/" onclick={onOverlayClick}>Close</a>

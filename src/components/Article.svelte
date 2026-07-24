@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import { setContent, openPop } from '../lib/store.svelte.js';
   import { articleImg, learnmoreThumb } from '../lib/assets.js';
 
@@ -15,7 +16,7 @@
     openPop({ type: learnmore.learnmoreType, panelNum, articleType: article.articleType, learnmore });
 </script>
 
-<div class="current-panel-article">
+<div class="current-panel-article" transition:fade|local={{ duration: 300 }}>
   <nav class="tabs">
     <ul>
       {#if contentIndex === 0}
