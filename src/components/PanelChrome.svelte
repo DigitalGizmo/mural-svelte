@@ -22,7 +22,7 @@
     {#if p.ordinal === panel.ordinal}
       <img src={miniNav(p.ordinal)} alt={`${p.title} selected`} class="panel-nav-selected" />
     {:else}
-      <a href={panelPath(p.slug)}>
+      <a href={panelPath(p.slug)} onclick={() => (ui.linkDirection = p.ordinal > panel.ordinal ? 1 : 0)}>
         <img src={miniNav(p.ordinal)} alt={p.title} />
       </a>
     {/if}

@@ -1,7 +1,7 @@
 <script>
   import { panels, home } from '../lib/data.js';
   import { panelPath } from '../lib/router.svelte.js';
-  import { openPop } from '../lib/store.svelte.js';
+  import { openPop, ui } from '../lib/store.svelte.js';
   import { panelBg, logo } from '../lib/assets.js';
 
   // Home pops come from the ordinal-99 node (replaces HomePopContent.js):
@@ -34,7 +34,7 @@
 
   <section class="mural-menu">
     {#each panels as panel (panel.slug)}
-      <a href={panelPath(panel.slug)}>
+      <a href={panelPath(panel.slug)} onclick={() => (ui.linkDirection = 2)}>
         <img alt={panel.slug} src={panelBg(panel.slug)} />
         <h2>{panel.title}</h2>
       </a>

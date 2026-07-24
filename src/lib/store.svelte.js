@@ -3,7 +3,7 @@
 
 export const ui = $state({
   contentIndex: 2, // 2 = Detail (panel overview), 0 = intro Article, 1 = fore Article
-  linkDirection: 2, // 0 = prev, 1 = next, 2 = none (drives slide-transition direction; unused until animations land)
+  linkDirection: 2, // 0 = prev, 1 = next, 2 = none — drives the panel slide direction (set by nav triggers before navigating)
   pop: null, // open lightbox: { type, panelNum, articleType?, hotspot?, learnmore? }  — null when closed
 });
 

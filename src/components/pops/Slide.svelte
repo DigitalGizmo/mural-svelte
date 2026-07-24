@@ -1,5 +1,8 @@
 <script>
-  import { learnmoreSlide, arrowPrev, arrowNext, arrowGrayPrev, arrowGrayNext } from '../../lib/assets.js';
+  // Drives the slideshow: holds the current index + direction, and hands a frozen
+  // snapshot of each slide to a keyed SlideContainer so slides cross-slide cleanly.
+  import SlideContainer from './SlideContainer.svelte';
+  import { learnmoreSlide } from '../../lib/assets.js';
 
   let { pop } = $props();
 
@@ -7,45 +10,27 @@
   const slides = lm.slides;
 
   let slideIndex = $state(0);
+  let dir = $state(1); // 1 = next, 0 = prev; read live by the slide transition
 
-  const current = $derived(slides[slideIndex]);
-  const hasPrev = $derived(slideIndex > 0);
-  const hasNext = $derived(slideIndex < slides.length - 1);
-
-  const nextSlide = () => { if (hasNext) slideIndex += 1; };
-  const prevSlide = () => { if (hasPrev) slideIndex -= 1; };
+  const nextSlide = () => {
+    if (slideIndex < slides.length - 1) { dir = 1; slideIndex += 1; }
+  };
+  const prevSlide = () => {
+    if (slideIndex > 0) { dir = 0; slideIndex -= 1; }
+  };
 </script>
 
-<div class="slide-container">
-  <div class="pop-img">
-    <nav class="slide-nav prev-slide">
-      {#if hasPrev}
-        <button onclick={prevSlide}>
-          <img src={arrowPrev} alt="previous slide" class="slide-arrow" />
-        </button>
-      {:else}
-        <span class="no-more"><img src={arrowGrayPrev} alt="no more slides" class="slide-arrow" /></span>
-      {/if}
-    </nav>
-
-    <img class="slide-image" alt={lm.title}
-      src={learnmoreSlide(pop.panelNum, pop.articleType, lm.learnmoreType, slideIndex + 1)} />
-
-    <nav class="slide-nav next-slide">
-      {#if hasNext}
-        <button onclick={nextSlide}>
-          <img src={arrowNext} alt="next slide" class="slide-arrow" />
-        </button>
-      {:else}
-        <span class="no-more"><img src={arrowGrayNext} alt="no more slides" class="slide-arrow" /></span>
-      {/if}
-    </nav>
-
-    <div>{@html current.caption}</div>
-  </div>
-
-  <div class="slide-caption">
-    <h4>{@html current.title}</h4>
-    <div>{@html current.narrative}</div>
-  </div>
-</div>
+{#key slideIndex}
+  <SlideContainer
+    src={learnmoreSlide(pop.panelNum, pop.articleType, lm.learnmoreType, slideIndex + 1)}
+    alt={lm.title}
+    title={slides[slideIndex].title}
+    caption={slides[slideIndex].caption}
+    narrative={slides[slideIndex].narrative}
+    hasPrev={slideIndex > 0}
+    hasNext={slideIndex < slides.length - 1}
+    {prevSlide}
+    {nextSlide}
+    getDir={() => dir}
+  />
+{/key}
