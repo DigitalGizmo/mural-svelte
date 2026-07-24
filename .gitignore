@@ -1,0 +1,33 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Media assets (~298MB of images/audio/video) — kept OUT of the repo.
+# These are a managed payload: restore them into public/ from the asset
+# archive (the sitesucker backup) before running `npm run build` / deploying.
+# NOTE: with these ignored, a fresh clone alone cannot produce a working
+# build until the assets are copied back in.
+/public/panels/
+/public/pops/
+/public/images/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
