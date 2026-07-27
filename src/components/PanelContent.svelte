@@ -8,7 +8,7 @@
   import Article from './Article.svelte';
   import { panels, slugOrder } from '../lib/data.js';
   import { panelPath, route, go } from '../lib/router.svelte.js';
-  import { ui } from '../lib/store.svelte.js';
+  import { ui, beginPanelNav } from '../lib/store.svelte.js';
   import { panelPrev, panelNext, arrowPrev, arrowNext } from '../lib/assets.js';
   import { panelSlide } from '../lib/transitions.js';
   import { swipe } from '../lib/swipe.js';
@@ -21,10 +21,10 @@
 
   // Swipe left → next panel, right → prev (mirrors the arrows; sets slide direction).
   const swipeNext = () => {
-    if (nextPanel) { ui.linkDirection = 1; go(panelPath(nextPanel.slug)); }
+    if (nextPanel) { beginPanelNav(1); go(panelPath(nextPanel.slug)); }
   };
   const swipePrev = () => {
-    if (prevPanel) { ui.linkDirection = 0; go(panelPath(prevPanel.slug)); }
+    if (prevPanel) { beginPanelNav(0); go(panelPath(prevPanel.slug)); }
   };
 
   // This instance is "active" only while it's the routed panel. While active, the
@@ -47,9 +47,13 @@
   <div class="prev-panel">
     {#if prevPanel}
       <img src={panelPrev(panel.slug)} alt={`Previous panel is ${prevPanel.slug}`} />
-      <a href={panelPath(prevPanel.slug)} onclick={() => (ui.linkDirection = 0)}>
-        <img src={arrowPrev} alt="prev arrow" class="arrow" />
-      </a>
+      <!-- Hidden during the slide (ui.navigating) so the outgoing and incoming
+           panels' arrows don't cross into an "X"; they reappear when it settles. -->
+      {#if active && !ui.navigating}
+        <a href={panelPath(prevPanel.slug)} onclick={() => beginPanelNav(0)}>
+          <img src={arrowPrev} alt="prev arrow" class="arrow" />
+        </a>
+      {/if}
     {/if}
   </div>
 
@@ -64,9 +68,11 @@
   <div class="next-panel">
     {#if nextPanel}
       <img src={panelNext(panel.slug)} alt={`${nextPanel.slug} next`} />
-      <a href={panelPath(nextPanel.slug)} onclick={() => (ui.linkDirection = 1)}>
-        <img src={arrowNext} alt="next arrow" class="arrow" />
-      </a>
+      {#if active && !ui.navigating}
+        <a href={panelPath(nextPanel.slug)} onclick={() => beginPanelNav(1)}>
+          <img src={arrowNext} alt="next arrow" class="arrow" />
+        </a>
+      {/if}
     {/if}
   </div>
 </div>

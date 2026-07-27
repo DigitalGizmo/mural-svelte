@@ -1,7 +1,7 @@
 <script>
   import { panels } from '../lib/data.js';
   import { homePath, panelPath } from '../lib/router.svelte.js';
-  import { ui, setContent } from '../lib/store.svelte.js';
+  import { ui, setContent, beginPanelNav } from '../lib/store.svelte.js';
   import { logo, miniNav } from '../lib/assets.js';
 
   let { panel } = $props();
@@ -22,7 +22,7 @@
     {#if p.ordinal === panel.ordinal}
       <img src={miniNav(p.ordinal)} alt={`${p.title} selected`} class="panel-nav-selected" />
     {:else}
-      <a href={panelPath(p.slug)} onclick={() => (ui.linkDirection = p.ordinal > panel.ordinal ? 1 : 0)}>
+      <a href={panelPath(p.slug)} onclick={() => beginPanelNav(p.ordinal > panel.ordinal ? 1 : 0)}>
         <img src={miniNav(p.ordinal)} alt={p.title} />
       </a>
     {/if}
