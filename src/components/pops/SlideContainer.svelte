@@ -7,7 +7,7 @@
   import { swipe } from '../../lib/swipe.js';
   import { arrowPrev, arrowNext, arrowGrayPrev, arrowGrayNext } from '../../lib/assets.js';
 
-  let { src, alt, title, caption, narrative, hasPrev, hasNext, prevSlide, nextSlide, getDir } =
+  let { src, alt, title, caption, narrative, hasPrev, hasNext, prevSlide, nextSlide, getDir, sliding } =
     $props();
 </script>
 
@@ -18,25 +18,31 @@
   out:slideShow|local={{ dir: getDir(), mode: 'out' }}
 >
   <div class="pop-img">
+    <!-- Arrows hidden during the slide (`sliding`) so the outgoing and incoming
+         slides' arrows don't cross into an "X"; they reappear when it settles. -->
     <nav class="slide-nav prev-slide">
-      {#if hasPrev}
-        <button onclick={prevSlide}>
-          <img src={arrowPrev} alt="previous slide" class="slide-arrow" />
-        </button>
-      {:else}
-        <span class="no-more"><img src={arrowGrayPrev} alt="no more slides" class="slide-arrow" /></span>
+      {#if !sliding}
+        {#if hasPrev}
+          <button onclick={prevSlide}>
+            <img src={arrowPrev} alt="previous slide" class="slide-arrow" />
+          </button>
+        {:else}
+          <span class="no-more"><img src={arrowGrayPrev} alt="no more slides" class="slide-arrow" /></span>
+        {/if}
       {/if}
     </nav>
 
     <img class="slide-image" {alt} {src} />
 
     <nav class="slide-nav next-slide">
-      {#if hasNext}
-        <button onclick={nextSlide}>
-          <img src={arrowNext} alt="next slide" class="slide-arrow" />
-        </button>
-      {:else}
-        <span class="no-more"><img src={arrowGrayNext} alt="no more slides" class="slide-arrow" /></span>
+      {#if !sliding}
+        {#if hasNext}
+          <button onclick={nextSlide}>
+            <img src={arrowNext} alt="next slide" class="slide-arrow" />
+          </button>
+        {:else}
+          <span class="no-more"><img src={arrowGrayNext} alt="no more slides" class="slide-arrow" /></span>
+        {/if}
       {/if}
     </nav>
 
