@@ -2,10 +2,12 @@
 // no server rewrite rules needed. Routes:
 //   #/                     -> home
 //   #/panels/<slug>        -> panel
+//   #/attract              -> attract loop (kiosk only)
 import { slugOrder } from './data.js';
 
 function parse() {
   const h = location.hash.replace(/^#/, '') || '/';
+  if (h === '/attract') return { name: 'attract', slug: null };
   const m = h.match(/^\/panels\/(.+)$/);
   if (m) {
     const slug = decodeURIComponent(m[1]);
@@ -31,3 +33,4 @@ export function go(path) {
 
 export const panelPath = (slug) => `#/panels/${slug}`;
 export const homePath = '#/';
+export const attractPath = '#/attract';

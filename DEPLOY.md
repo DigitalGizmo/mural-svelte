@@ -20,13 +20,32 @@ Env values live in the committed `.env.*` files (no secrets, just URLs).
 
 ## Build matrix
 
-| Command | App base (`VITE_BASE_URL`) | Media source (`VITE_IMAGE_BASE`) | Media copied into `dist/`? | Use |
-|---|---|---|---|---|
-| `npm run dev` | `/` | local `public/` | (dev server) | Everyday dev; works offline |
-| `npm run build` | `/` | local `public/` | yes (bundled) | Self-contained static at a server root (e.g. local nginx) |
-| `npm run build:kiosk` | `./` | relative `./` | yes (bundled) | Offline kiosk — runs from `file://` or any subdir, no network |
-| `npm run build:review` | `/maine-labor-mural/` | `https://assets.digitalgizmo.com/maine-labor-mural` | copied but unused | Online review on digitalgizmo |
-| `npm run build:production` | `/maine-labor-mural/` | `https://assets.digitalgizmo.com/maine-labor-mural` | copied but unused | Production (confirm base path for the final host) |
+| Command | Layout | App base (`VITE_BASE_URL`) | Media source (`VITE_IMAGE_BASE`) | Media copied into `dist/`? | Use |
+|---|---|---|---|---|---|
+| `npm run dev` | web | `/` | local `public/` | (dev server) | Everyday dev; works offline |
+| `npm run dev:kiosk` | **kiosk** | `./` | relative `./` | (dev server) | Kiosk-layout dev; test at 1024x1366 portrait |
+| `npm run dev:review` | **kiosk** | `/maine-labor-mural/` | CDN | (dev server) | Kiosk layout against the live CDN media |
+| `npm run build` | web | `/` | local `public/` | yes (bundled) | Self-contained static at a server root (e.g. local nginx) |
+| `npm run build:kiosk` | **kiosk** | `./` | relative `./` | yes (bundled) | Offline kiosk — runs from any subdir, no network |
+| `npm run build:review` | **kiosk** | `/maine-labor-mural/` | `https://assets.digitalgizmo.com/maine-labor-mural` | copied but unused | Online kiosk review on digitalgizmo |
+| `npm run build:production` | web | `/maine-labor-mural/` | `https://assets.digitalgizmo.com/maine-labor-mural` | copied but unused | Production web (confirm base path for the final host) |
+
+## The third knob: which layout
+
+`VITE_KIOSK=true` (set in `.env.kiosk` and `.env.review`) selects the **kiosk layout** —
+the museum's 2019 iPad design, ported from `msm_mural_project`. Everything else gets the
+web layout. The flag is read once in `src/lib/kiosk.js`; `App.svelte` picks the component
+tree and `src/kiosk.css` (loaded only in kiosk builds, scoped to `html.kiosk`) carries the
+styling, so the two layouts cannot interfere with each other.
+
+`VITE_KIOSK_IDLE_SECONDS` (default 180) is how long the app waits, with no touches and no
+media playing, before handing over to the attract loop at `#/attract`. Set it to `0` to
+disable — e.g. if Kiosk Pro is configured to do its own idle reset. Lower it (say 10) when
+you want to test the attract loop.
+
+**Review is the kiosk layout.** It is the same build as `build:kiosk` in every respect
+except that media comes from the CDN instead of being bundled, so what the museum reviews
+online is what runs on the iPad.
 
 ## Media as a managed payload
 

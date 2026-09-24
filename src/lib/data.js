@@ -51,6 +51,9 @@ function flattenPanel(n) {
       y: h.yPosition,
     })),
     articles: nodes(n.articleSet).map(flattenArticle),
+    // "Visit Our Exhibit" links — shown in the kiosk article view (5 of the 11
+    // panels have one); each opens a visit pop.
+    visits: nodes(n.visitSet).map((v) => ({ title: v.title, narrative: v.narrative })),
   };
 }
 

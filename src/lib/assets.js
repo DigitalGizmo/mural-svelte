@@ -16,6 +16,9 @@ export const panelBg = (slug) => `${BASE}/panels/panelpics/${slug}.jpg`;
 export const panelPrev = (slug) => `${BASE}/panels/panelpics/${slug}-prev.jpg`;
 export const panelNext = (slug) => `${BASE}/panels/panelpics/${slug}-next.jpg`;
 
+// Full-mural panorama (kiosk home menu)
+export const muralFull = `${BASE}/panels/mural.jpg`;
+
 // Article intro/fore image
 export const articleImg = (ordinal, articleType) =>
   `${BASE}/panels/articlepics/${p(ordinal)}-${articleType}.jpg`;
@@ -31,6 +34,9 @@ export const learnmoreThumb = (ordinal, articleType, learnmoreType) =>
 // Learn-more full slide image (n is 1-based slide index)
 export const learnmoreSlide = (ordinal, articleType, learnmoreType, n) =>
   `${BASE}/pops/learnmore/fullpics/${p(ordinal)}-${articleType}-${learnmoreType}-${n}.jpg`;
+
+// "Visit Our Exhibit" pop image (kiosk article view)
+export const visitImg = (ordinal) => `${BASE}/pops/learnmore/fullpics/${p(ordinal)}-visit.jpg`;
 
 // Voice audio clip (partNum from voiceSet node)
 export const voiceAudio = (ordinal, articleType, learnmoreType, partNum) =>

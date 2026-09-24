@@ -611,7 +611,10 @@ article.article-body {
 }
 
 #slimpop-overlay {
-  background: url(/images/overlay.png) repeat;
+  /* Was a tiled /images/overlay.png — a 4x4 PNG of solid black at alpha 128, i.e.
+     exactly this colour. As an absolute path it 404'd in any build not served from
+     the site root (kiosk, review), and the file sat in gitignored public/images/. */
+  background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   height: 100%;
   left: 0;

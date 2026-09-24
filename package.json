@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:kiosk": "vite --mode kiosk",
     "dev:review": "vite --mode review",
     "build": "vite build",
     "build:kiosk": "vite build --mode kiosk",
