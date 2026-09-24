@@ -89,10 +89,17 @@ html.kiosk .panel-nav {
   margin-left: 1em;
 }
 
-/* The 11 mini-nav blocks — the original used 12 x 28px sprite images. */
+/* The 11 mini-nav blocks — the original used 12 x 28px sprite images. The anchors
+   are flex too, so every block is the same box: wrapping the inline-block span in a
+   link added descender space below it, which pushed the unwrapped selected block
+   about 3px lower than its neighbours. */
+html.kiosk .panel-nav a {
+  display: flex;
+}
+
 html.kiosk .panel-nav .mini-nav {
-  background-color: var(--medium-gray);
-  display: inline-block;
+  background-color: #666;
+  display: block;
   height: 28px;
   margin-right: 2px;
   width: 12px;
@@ -130,10 +137,11 @@ html.kiosk .panel-slider {
 html.kiosk .panel-title {
   background-color: #fff;
   grid-area: 1 / 2;
-  /* The title row is a fixed share of the height (as in the original), so on a
-     screen narrower than the 1024 reference the blurb can re-wrap taller than the
-     row: scroll rather than clip. */
-  overflow: auto;
+  /* Clip, never scroll: with overflow:auto a 4-line blurb that overran the row by
+     a pixel or two raised a scrollbar down the right edge of the white block, which
+     read as the dark nav area encroaching on it. The h1 margin below gives enough
+     headroom that 4 lines fit (36 + 3.6 + 88 = 128px in a 131px row). */
+  overflow: hidden;
   padding: 0 1.6em;
   position: relative;
   text-align: center;
@@ -144,7 +152,7 @@ html.kiosk .panel-title h1 {
   font-size: 1.8em;
   font-weight: 600;
   line-height: 1em;
-  margin: 0 0 0.2em 0;
+  margin: 0 0 0.1em 0; /* 0.2em left a 4-line blurb ~1px short of fitting the row */
 }
 
 html.kiosk .panel-title h3 {
