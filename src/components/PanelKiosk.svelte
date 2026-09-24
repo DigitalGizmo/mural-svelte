@@ -49,25 +49,9 @@
 </script>
 
 <div class="kiosk-wrapper">
-  <div class="home-nav">
-    <a href={homePath} onclick={() => (ui.linkDirection = 2)}>&larr; Home</a>
-  </div>
-
-  <div class="panel-nav">
-    {#each panels as p (p.slug)}
-      {#if p.ordinal === panel.ordinal}
-        <span class="mini-nav selected" aria-current="true"></span>
-      {:else}
-        <a href={panelPath(p.slug)} aria-label={p.title}
-          onclick={() => beginPanelNav(p.ordinal > panel.ordinal ? 1 : 0)}>
-          <span class="mini-nav"></span>
-        </a>
-      {/if}
-    {/each}
-  </div>
-
-  <!-- The title block and the main column are panel-specific, so they slide
-       together; HOME and the mini-nav are fixed chrome and stay put. -->
+  <!-- Everything panel-specific lives in the keyed slider below — including HOME
+       and the mini-nav, so the whole screen travels as one unit during a slide
+       (the 2019 kiosk slid its entire .wrapper the same way). -->
   <div class="panel-stack">
     {#key panel.slug}
       <div
@@ -76,6 +60,23 @@
         in:panelSlide|local={{ dir: ui.linkDirection, mode: 'in' }}
         out:panelSlide|local={{ dir: ui.linkDirection, mode: 'out' }}
       >
+        <div class="home-nav">
+          <a href={homePath} onclick={() => (ui.linkDirection = 2)}>&larr; Home</a>
+        </div>
+
+        <div class="panel-nav">
+          {#each panels as p (p.slug)}
+            {#if p.ordinal === panel.ordinal}
+              <span class="mini-nav selected" aria-current="true"></span>
+            {:else}
+              <a href={panelPath(p.slug)} aria-label={p.title}
+                onclick={() => beginPanelNav(p.ordinal > panel.ordinal ? 1 : 0)}>
+                <span class="mini-nav"></span>
+              </a>
+            {/if}
+          {/each}
+        </div>
+
         <div class="panel-title">
           {#if ci === 2}
             <h1>{panel.title}</h1>

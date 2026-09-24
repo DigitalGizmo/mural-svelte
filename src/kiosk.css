@@ -61,14 +61,14 @@ html.kiosk .kiosk-wrapper {
   overflow: hidden;
 }
 
-/* HOME and the mini-nav are fixed chrome: the panel slides underneath them. */
+/* HOME and the mini-nav sit in the top cells of the two dark side columns, inside
+   the sliding unit, so they travel with the panel rather than hovering over it. */
 html.kiosk .home-nav,
 html.kiosk .panel-nav {
   background-color: #000;
   font-size: 0.75em;
   letter-spacing: 0.025em;
   text-transform: uppercase;
-  z-index: 2;
   display: flex;
   align-items: center;
 }
@@ -115,8 +115,8 @@ html.kiosk .panel-stack {
   overflow: hidden;
 }
 
-/* The sliding unit: title block + slivers + main column, on the same grid as the
-   shell. Its row-1 side cells are empty, so HOME and the mini-nav show through. */
+/* The sliding unit: the whole screen's worth of panel — HOME, title block,
+   mini-nav, slivers and main column — on the same grid template as the shell. */
 html.kiosk .panel-slider {
   display: grid;
   grid-area: 1 / 1;
