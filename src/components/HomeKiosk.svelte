@@ -34,7 +34,7 @@
     Commissioned by the Maine Department of Labor; transferred to the Maine State Museum in 2019.
   </p>
 
-  <p>Tap to begin</p>
+  <p>Tap a panel to learn more</p>
 
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 3732 754" class="mural-full">
     <image x="0" y="0" href={muralFull} width="3732" height="754" />

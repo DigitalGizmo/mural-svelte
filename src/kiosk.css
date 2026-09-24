@@ -405,14 +405,18 @@ html.kiosk nav.tabs ul li {
   border: 1px solid #cc7a00;
   border-radius: 60px;
   box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.65); /* the design system's $drop-shadow */
-  display: inline-block;
+  /* inline-flex + centring, so a one-line label sits on the pill's centre line
+     rather than under a fixed top padding (a two-line label already looked right). */
+  align-items: center;
+  display: inline-flex;
   font-size: 1em;
   font-weight: bold;
   height: 3em; /* 60px at the reference size */
+  justify-content: center;
   letter-spacing: 0.05em;
   line-height: 1.2;
   margin: 0 5px 5px 5px;
-  padding: 0.8em 1.6em;
+  padding: 0 1.6em;
   text-align: center;
   vertical-align: top;
   width: 13em; /* 260px at the reference size */
@@ -440,11 +444,13 @@ html.kiosk nav.tabs ul li.selected span {
 /*        POPS        */
 /* ////////////////// */
 
+/* A definite height, not auto: the slideshow's .slide-container is absolutely
+   positioned (that's what lets slides cross-slide), so it contributes no height
+   and an auto-sized pop collapsed to just its header. 8% margins top and bottom. */
 html.kiosk #slimpop-container {
-  height: auto;
+  height: 84%;
   left: 7.5%;
   margin: 0;
-  max-height: 85%;
   overflow-y: auto;
   position: fixed;
   right: 7.5%;
@@ -455,7 +461,11 @@ html.kiosk #slimpop-container {
 html.kiosk .slimpop-wrapper {
   border: 1px solid var(--light-gray);
   box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.65);
-  height: auto;
+  /* The legacy .slimpop-wrapper carried this colour; without it, headings and any
+     other unstyled text in a pop inherited the kiosk body's #eee and all but
+     vanished on white (the hotspot pop's h4, voice titles, credits). */
+  color: var(--dark-gray);
+  height: 100%;
   padding: 1.6em;
 }
 
@@ -464,7 +474,10 @@ html.kiosk .pop-close a:visited {
   color: var(--dark-gray);
 }
 
-html.kiosk .pop-img img {
+/* :not(.slide-arrow) matters — this rule outranks app.css's `img.slide-arrow`
+   37px cap, so without it the slideshow's prev/next arrows were being blown up to
+   44vh along with the slide image. */
+html.kiosk .pop-img img:not(.slide-arrow) {
   max-height: 44vh; /* the original's 600px at the reference height */
 }
 
