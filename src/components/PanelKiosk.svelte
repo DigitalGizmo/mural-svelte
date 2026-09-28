@@ -20,6 +20,9 @@
   // never flashes the previous panel's article on its way in. The outgoing panel is
   // inside the {#key} block, which Svelte freezes for the slide-out, so it keeps
   // showing whatever it was showing.
+  // Capturing only the initial slug here is the point — the $effect below keeps it
+  // in step from then on — so Svelte's state_referenced_locally warning doesn't apply.
+  // svelte-ignore state_referenced_locally
   let shownSlug = $state(panel.slug);
   $effect(() => {
     if (panel.slug !== shownSlug) {

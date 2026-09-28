@@ -592,6 +592,13 @@ article.article-body {
   color: #ff9933;
 }
 
+/* Item headings inside a pop — the hotspot's object title, and the slide title in
+   a slideshow. Same grey as the .subhead label above them, in both layouts: on web
+   they were inheriting black, in kiosk #444 from the wrapper. */
+.slimpop-wrapper h4 {
+  color: #7c7c7c;
+}
+
 .slimpop-wrapper h4.subhead {
   color: #7c7c7c;
   margin-bottom: 0;
