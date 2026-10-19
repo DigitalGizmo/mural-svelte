@@ -8,7 +8,7 @@ export const KIOSK = import.meta.env.VITE_KIOSK === 'true';
 
 // Seconds of no interaction before the attract loop takes over. Legacy timeout.js
 // used 3 minutes. 0 disables it (e.g. if Kiosk Pro handles idle itself).
-const IDLE_SECONDS = Number(import.meta.env.VITE_KIOSK_IDLE_SECONDS ?? 180);
+const IDLE_SECONDS = Number(import.meta.env.VITE_KIOSK_IDLE_SECONDS ?? 90);
 
 // The legacy counted clicks only, so a visitor watching a video untouched would be
 // thrown into the attract loop mid-video. Playing media now holds the timer off.
